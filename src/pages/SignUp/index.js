@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-// import { Container } from './styles';
+import Background from '~/components/Background';
 
 export default function SignUp() {
     return (
-        <View><Text>SIGNUP</Text></View>
+        <Background><Text>SIGNUN</Text></Background>
     );
 }
