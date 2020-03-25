@@ -1,32 +1,41 @@
-import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import 'react-native-gesture-handler';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 
-const Tab = createBottomTabNavigator();
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 
-export default function Routes() {
-    return (
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="SignIn" component={SignIn} options={{
-                    tabBarLabel: "Home",
-                    tabBarIcon: ({ color, size }) => (
-                        <Icon name="home" color={color} size={size} />
-                    )
-                }} />
-                <Tab.Screen name="SingUp" component={SignUp} options={{
-                    tabBarLabel: "Perfil",
-                    tabBarIcon: ({ color, size }) => (
-                        <Icon name="cloud" color={color} size={size} />
-                    )
-                }}/>
-            </Tab.Navigator>
-        </NavigationContainer>
+export default (signedIn = false) =>
+  createAppContainer(
+    createSwitchNavigator(
+      {
+        Sign: createSwitchNavigator({
+          SignIn,
+          SignUp,
+        }),
+        App: createBottomTabNavigator(
+          {
+            Dashboard,
+            Profile,
+          },
+          {
+            tabBarOptions: {
+              keyboardHidesTabBar: true,
+              activeTintColor: '#FFF',
+              inactiveTintColor: 'rgba(255,255,255,0.6)',
+              style: {
+                backgroundColor: '#8d41a8',
+              },
+            },
+          }
+        ),
+      },
+      {
+        initialRouteName: signedIn ? 'App' : 'Sign',
+      }
     )
-}
+  );
