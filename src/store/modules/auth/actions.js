@@ -26,6 +26,12 @@ export function signUpSuccess({ user }) {
   };
 }
 
+export function signOut() {
+  return {
+    type: '@auth/SIGN_OUT',
+  };
+}
+
 export function signFailure() {
   return {
     type: '@auth/SIGN_FAILURE',

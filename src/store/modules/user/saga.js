@@ -7,19 +7,18 @@ import api from '~/services/api';
 
 function* updateProfileRequest({ payload }) {
   try {
-    const { name, email, avatar_id, ...rest } = payload.data;
+    const { name, email, ...rest } = payload.data;
 
     const profile = {
       name,
       email,
-      avatar_id,
       ...(rest.oldPassword ? rest : {}),
     };
 
-    const response = yield call(api.put, '/user', profile);
+    const response = yield call(api.put, '/users', profile);
 
     Alert.alert('Successo!', 'Perfil atualizado com sucesso');
-    put(Actions.updateProfileSuccess(response.data));
+    yield put(Actions.updateProfileSuccess(response));
   } catch (err) {
     put(Actions.failure());
     Alert.alert('Erro na alteração', 'Erro ao envio do formulário');
